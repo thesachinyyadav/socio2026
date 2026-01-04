@@ -268,8 +268,8 @@ export default function Page() {
   useEffect(() => {
     if (userData && userData.register_number && !authIsLoading) {
       setLoadingUserRegistrations(true);
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
       fetch(
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
         `${API_URL}/api/registrations/${userData.register_number}`
       )
         .then((res) =>
