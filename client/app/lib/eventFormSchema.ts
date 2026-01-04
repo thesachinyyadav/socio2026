@@ -140,6 +140,9 @@ export const eventFormSchema = z
         })
       )
       .optional(),
+    eventHeads: z
+      .array(z.string())
+      .optional(),
 
     scheduleItems: z.array(scheduleItemSchema).optional(),
   })
