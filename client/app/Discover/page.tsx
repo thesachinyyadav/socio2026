@@ -13,7 +13,7 @@ import {
   FetchedEvent as ContextFetchedEvent,
 } from "../../context/EventContext";
 
-interface Fest {
+interface ApiFest {
   id: number;
   fest_id: string;
   title: string;
@@ -22,6 +22,17 @@ interface Fest {
   description: string;
   fest_image_url: string;
   organizing_dept: string;
+}
+
+interface Fest {
+  fest_id: number;
+  fest_title: string;
+  organizing_dept: string;
+  description: string;
+  dateRange: string;
+  fest_image_url: string;
+  opening_date: Date;
+  closing_date: Date;
 }
 
 interface Category {
@@ -71,14 +82,27 @@ const DiscoverPage = () => {
         const data = await response.json();
 
         if (data.fests && Array.isArray(data.fests)) {
-          const typedFests: Fest[] = data.fests;
-          const sortedFests = typedFests.sort(
+          const apiFests: ApiFest[] = data.fests;
+          const sortedFests = apiFests.sort(
             (a, b) =>
               new Date(b.opening_date).getTime() -
               new Date(a.opening_date).getTime()
           );
           const recentFests = sortedFests.slice(0, 3);
-          setUpcomingFests(recentFests);
+          
+          // Transform API data to match FestsSection expected format
+          const transformedFests: Fest[] = recentFests.map((fest) => ({
+            fest_id: fest.id,
+            fest_title: fest.title,
+            organizing_dept: fest.organizing_dept,
+            description: fest.description,
+            dateRange: `${fest.opening_date} - ${fest.closing_date}`,
+            fest_image_url: fest.fest_image_url,
+            opening_date: new Date(fest.opening_date),
+            closing_date: new Date(fest.closing_date),
+          }));
+          
+          setUpcomingFests(transformedFests);
         } else {
           setUpcomingFests([]);
         }
