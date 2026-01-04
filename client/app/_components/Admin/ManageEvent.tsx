@@ -1172,7 +1172,7 @@ export default function EventForm({
                     options={departmentOptions}
                     placeholder="Select departments"
                     label="Department access:"
-                    error={errors.department}
+                    error={errors.department as any}
                     required
                   />
                   <CustomDropdown
