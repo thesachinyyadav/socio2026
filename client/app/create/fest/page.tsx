@@ -950,7 +950,7 @@ export default function CreateFest() {
       }
       setErrors(newErrors);
     },
-    [errors, formData.openingDate, formData.closingDate, isEditMode] // Use prop isEditMode here
+    [errors, formData.openingDate, formData.closingDate, isEditModeFromPath]
   );
 
   const handleSubmit = async (e: React.FormEvent) => {
