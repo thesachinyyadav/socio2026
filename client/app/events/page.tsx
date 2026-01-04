@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEvents } from "../../context/EventContext";
@@ -27,7 +27,7 @@ interface FilterOption {
   active: boolean;
 }
 
-const EventsPage = () => {
+const EventsPageContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const categoryParam = searchParams.get("category");
@@ -247,6 +247,14 @@ const EventsPage = () => {
       </main>
       <Footer />
     </div>
+  );
+};
+
+const EventsPage = () => {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <EventsPageContent />
+    </Suspense>
   );
 };
 
