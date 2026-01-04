@@ -991,7 +991,7 @@ export default function CreateFest() {
             if (!inputDate) errorMsg = "Invalid date value";
             else if (
               inputDate < currentDate &&
-              !isEditMode &&
+              !isEditModeFromPath &&
               name === "openingDate"
             )
               errorMsg = `${dateType} must be on or after today`;
@@ -1056,7 +1056,7 @@ export default function CreateFest() {
       }
     });
 
-    if (!imageFile && !isEditMode && !existingImageFileUrl) {
+    if (!imageFile && !isEditModeFromPath && !existingImageFileUrl) {
       currentValidationErrors.imageFile = "Fest image is required";
     } else if (imageFile) {
       if (imageFile.size > 3 * 1024 * 1024)
@@ -1091,7 +1091,7 @@ export default function CreateFest() {
           .from("fest-images")
           .upload(filePath, imageFile, {
             cacheControl: "3600",
-            upsert: isEditMode,
+            upsert: isEditModeFromPath,
           });
 
         if (uploadError) {
@@ -1116,8 +1116,8 @@ export default function CreateFest() {
         return;
       }
       setIsUploadingImage(false);
-    } else if (isEditMode && existingImageFileUrl && !imageFile) {
-    } else if (!imageFile && !isEditMode) {
+    } else if (isEditModeFromPath && existingImageFileUrl && !imageFile) {
+    } else if (!imageFile && !isEditModeFromPath) {
       setErrors((prev) => ({
         ...prev,
         submit: "Fest image is required for new fests.",
@@ -1148,7 +1148,7 @@ export default function CreateFest() {
 
       let response;
       const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-      if (isEditMode && festIdFromPath) {
+      if (isEditModeFromPath && festIdFromPath) {
         response = await fetch(
           `${API_URL}/api/fests/${festIdFromPath}`,
           {
@@ -1175,7 +1175,7 @@ export default function CreateFest() {
         const errorData = await response.json();
         throw new Error(
           errorData.error ||
-            `Failed to ${isEditMode ? "update" : "create"} fest.` // Use prop isEditMode here
+            `Failed to ${isEditModeFromPath ? "update" : "create"} fest.`
         );
       }
 
@@ -1203,7 +1203,7 @@ export default function CreateFest() {
         });
     } else {
       setImageFile(null);
-      if (!isEditMode || (isEditMode && !existingImageFileUrl)) {
+      if (!isEditModeFromPath || (isEditModeFromPath && !existingImageFileUrl)) {
         setErrors((prev) => ({
           ...prev,
           imageFile: "Fest image is required",
@@ -1272,11 +1272,11 @@ export default function CreateFest() {
       ? new Date(parseYYYYMMDD(formData.openingDate)!)
       : new Date(minOpeningDate);
 
-  if (minClosingDate < currentDateRef.current && !isEditMode)
+  if (minClosingDate < currentDateRef.current && !isEditModeFromPath)
     minClosingDate.setDate(currentDateRef.current.getDate());
   minClosingDate.setHours(0, 0, 0, 0);
 
-  const finalIsEditMode = isEditMode || isEditModeFromPath;
+  const finalIsEditMode = isEditModeFromPath;
 
   const showMainLoader = (isLoadingFestData && finalIsEditMode) || isNavigating;
   const mainLoaderText = isLoadingFestData
