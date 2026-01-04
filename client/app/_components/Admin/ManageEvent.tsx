@@ -739,7 +739,7 @@ export default function EventForm({
     watch,
     reset,
   } = useForm<EventFormData>({
-    resolver: zodResolver(eventFormSchema),
+    resolver: zodResolver(eventFormSchema) as any,
     defaultValues: {
       eventTitle: "",
       eventDate: "",
