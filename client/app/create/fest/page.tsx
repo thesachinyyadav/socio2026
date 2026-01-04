@@ -862,7 +862,7 @@ export default function CreateFest() {
               if (!inputDate) newErrors[name] = "Invalid date value";
               else if (
                 inputDate < currentDate &&
-                !isEditMode && // Use prop isEditMode here
+                !isEditModeFromPath && // Use isEditModeFromPath instead
                 name === "openingDate"
               )
                 newErrors[name] = `${dateType} must be on or after today`;
