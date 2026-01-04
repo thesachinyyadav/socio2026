@@ -669,26 +669,6 @@ function DepartmentAndCategoryInputs({
   );
 }
 
-interface CreateFestProps {
-  title?: string;
-  openingDate?: string;
-  closingDate?: string;
-  detailedDescription?: string;
-  department?: string[];
-  category?: string;
-  contactEmail?: string;
-  contactPhone?: string;
-  eventHeads?: string[];
-  scheduleItems?: { time: string; activity: string }[];
-  rules?: string[];
-  prizes?: string[];
-  organizingDept?: string;
-  isEditMode?: boolean;
-  existingImageFileUrl?: string | null;
-  existingBannerFileUrl?: string | null;
-  existingPdfFileUrl?: string | null;
-}
-
 const FullPageSpinner: React.FC<{ text: string }> = ({ text }) => (
   <div className="fixed inset-0 bg-white z-[110] flex items-center justify-center">
     <div className="text-center">
@@ -717,37 +697,21 @@ const FullPageSpinner: React.FC<{ text: string }> = ({ text }) => (
   </div>
 );
 
-export default function CreateFest({
-  title = "",
-  openingDate = "",
-  closingDate = "",
-  detailedDescription = "",
-  department = [],
-  category = "",
-  contactEmail = "",
-  contactPhone = "",
-  organizingDept = "",
-  eventHeads: initialEventHeads = [],
-  // New props for edit mode
-  isEditMode = false,
-  existingImageFileUrl,
-  existingBannerFileUrl,
-  existingPdfFileUrl,
-}: CreateFestProps) {
+export default function CreateFest() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [formData, setFormData] = useState<CreateFestState>({
-    title,
-    openingDate,
-    closingDate,
-    detailedDescription,
-    department,
-    category,
-    contactEmail,
-    contactPhone,
-    organizingDept,
-    eventHeads: initialEventHeads,
+    title: "",
+    openingDate: "",
+    closingDate: "",
+    detailedDescription: "",
+    department: [],
+    category: "",
+    contactEmail: "",
+    contactPhone: "",
+    organizingDept: "",
+    eventHeads: [],
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false); // Used for delete operation
