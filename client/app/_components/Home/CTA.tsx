@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createBrowserClient } from "@supabase/ssr";
 import gsap from "gsap";
 
 const CTA = () => {
   const ctaRef = useRef<HTMLDivElement>(null);
   const signInWithGoogle = async () => {
-    const supabase = createClientComponentClient();
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     try {
       await supabase.auth.signInWithOAuth({
         provider: "google",

@@ -1,20 +1,23 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createBrowserClient } from "@supabase/ssr";
 import gsap from "gsap";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { TypeAnimation } from "react-type-animation";
 
 const Hero = () => {
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
   const heroRef = useRef<HTMLDivElement>(null);
   const { session, isLoading } = useAuth();
   const router = useRouter();
   const [startTyping, setStartTyping] = useState(false);
 
   const handleSignInWithGoogle = async () => {
-    const supabase = createClientComponentClient();
     try {
       await supabase.auth.signInWithOAuth({
         provider: "google",
