@@ -15,8 +15,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${APP_URL}/?error=no_code`);
   }
 
-  const cookieStore = await cookies();
-  const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+  const supabase = createRouteHandlerClient({ cookies });
 
   try {
     const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(
