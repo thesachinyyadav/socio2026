@@ -701,6 +701,7 @@ export default function CreateFest() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+  const [existingImageFileUrl, setExistingImageFileUrl] = useState<string | null>(null);
   const [formData, setFormData] = useState<CreateFestState>({
     title: "",
     openingDate: "",
@@ -771,6 +772,10 @@ export default function CreateFest() {
               eventHeads: data.fest.event_heads || [],
               organizingDept: data.fest.organizing_dept || "",
             });
+            // Set existing image URL if available
+            if (data.fest.fest_image_url) {
+              setExistingImageFileUrl(data.fest.fest_image_url);
+            }
           } else {
             throw new Error("Fest data not found in response.");
           }
