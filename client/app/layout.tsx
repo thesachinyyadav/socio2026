@@ -66,6 +66,7 @@ const getRandomEvents = (
 const transformToEventCardData = (event: FetchedEvent): EventForCard => {
   return {
     id: event.id,
+    event_id: event.event_id,
     title: event.title,
     fest: event.fest,
     date: event.event_date,
