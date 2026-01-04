@@ -18,11 +18,12 @@ const Hero = () => {
   const [startTyping, setStartTyping] = useState(false);
 
   const handleSignInWithGoogle = async () => {
+    const redirectUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
     try {
       await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${redirectUrl}/auth/callback`,
         },
       });
     } catch (error) {
