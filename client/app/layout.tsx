@@ -20,22 +20,35 @@ export const metadata: Metadata = {
 };
 
 interface FetchedEvent {
-  id: number;
   event_id: string;
   title: string;
+  description: string | null;
   event_date: string | null;
   event_time: string | null;
+  end_date: string | null;
   venue: string | null;
   category: string | null;
   department_access: string[] | string | null;
   claims_applicable: boolean | null;
   registration_fee: number | null;
+  participants_per_team: number | null;
   event_image_url: string | null;
   banner_url: string | null;
-  created_at: string;
+  pdf_url: string | null;
+  rules: string | any[] | null;
+  schedule: string | Array<{ time: string; activity: string }> | null;
+  prizes: string | string[] | null;
+  organizer_email: string | null;
+  organizer_phone: number | string | null;
+  whatsapp_invite_link: string | null;
   organizing_dept: string | null;
+  id: number;
   fest: string;
   created_by: string;
+  created_at: string;
+  updated_at: string | null;
+  registration_deadline: string | null;
+  total_participants: number | null;
 }
 
 const deriveTags = (event: FetchedEvent): string[] => {
